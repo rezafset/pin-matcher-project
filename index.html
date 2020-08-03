@@ -64,7 +64,7 @@
     </div>
 
     <script>
-        // 
+        // Matching Pin & the Number
         function pinScreenNumberCheck(){
             let  generatedPin = document.getElementById("generatedPin").value;
             let screen = document.getElementById("screen").value;
@@ -74,6 +74,7 @@
             }
             else{
                 matchedOrNot("pinMismatched");
+                document.getElementById("pinMatched").style.display = "none";
                 const tryLeft = document.getElementById("tryLeft").innerText;
                 let tryRemaining = tryLeft - 1;
                 document.getElementById("tryLeft").innerText = tryRemaining;
@@ -81,7 +82,6 @@
                     document.getElementById("submit").disabled = true;
                     document.getElementById("submit").style.backgroundColor = "gray";
                 }
-                document.getElementById("pinMatched").style.display = "none";
                 // screen.style.display = "none";
             }
         }
