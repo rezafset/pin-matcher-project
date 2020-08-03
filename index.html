@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width" >
+                    <input class="form-control" id="generatedPin" type="text">
+                    <button onclick="pinGenerate(9999 , 1000)" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <form name="screenArea">
+                        <input class="form-control" id="screen" name="screen" type="text" placeholder="Type the required pin">
+                    </form>
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <input type="button" value="7" onclick="putInput('7')">
+                                <input type="button" value="8" onclick="putInput('8')">
+                                <input type="button" value="9" onclick="putInput('9')">
+                            </div>
+
+                            <div class="calc-button-row">
+                                <input type="button" value="4" onclick="putInput('4')">
+                                <input type="button" value="5" onclick="putInput('5')">
+                                <input type="button" value="6" onclick="putInput('6')">
+                            </div>
+
+                            <div class="calc-button-row">
+                                <input type="button" value="1" onclick="putInput('1')">
+                                <input type="button" value="2" onclick="putInput('2')">
+                                <input type="button" value="3" onclick="putInput('3')">
+                            </div>
+
+                            <div class="calc-button-row">
+                                <input type="button" value="<" onclick="clearValueOneByOne()">
+                                <input type="button" value="0" onclick="putInput('0')">
+                                <input type="button" value="C" onclick="clearAllValue()">
+                            </div>
+
+                            <div>
+                                <button onclick="pinScreenNumberCheck()" type="submit" id="submit" class="submit-btn">Submit</button>
+                                <p class="action-left"> <span id="tryLeft">3</span> try left</p>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section" id="pinNotify">
+            <p class="notify" id="pinMismatched"> <span id="wrong">❌</span> Pin Didn't Match, Please try again</p>
+            <p class="notify" id="pinMatched"><i class="fa fa-check"></i> Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+
+    <script>
+        // 
+        function pinScreenNumberCheck(){
+            let  generatedPin = document.getElementById("generatedPin").value;
+            let screen = document.getElementById("screen").value;
+            if (generatedPin == screen){
+                matchedOrNot("pinMatched");
+                document.getElementById("pinMismatched").style.display = "none";
+            }
+            else{
+                matchedOrNot("pinMismatched");
+                const tryLeft = document.getElementById("tryLeft").innerText;
+                let tryRemaining = tryLeft - 1;
+                document.getElementById("tryLeft").innerText = tryRemaining;
+                if(tryRemaining == 0){
+                    document.getElementById("submit").disabled = true;
+                    document.getElementById("submit").style.backgroundColor = "gray";
+                }
+                document.getElementById("pinMatched").style.display = "none";
+                // screen.style.display = "none";
+            }
+        }
+
+        // Pin and Screen matched or not function
+        function matchedOrNot(isMatched){
+            let pinMismatched = document.getElementById(isMatched);
+            pinMismatched.style.display = "block";
+        }
+        // Random Number Generate Function
+        function pinGenerate(max , min){           
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            let pinInput = Math.floor(Math.random() * (max - min)) + min;
+            document.getElementById("generatedPin").value = pinInput;
+        }
+        // Add Value
+        function putInput(add){
+            screenArea.screen.value += add;
+        }
+        // Remove All Values
+        function clearAllValue(){
+            screenArea.screen.value = "";
+        }
+        // Remove Value One By One
+        function clearValueOneByOne(){
+            let number = screenArea.screen.value;
+            let clearValue = number.slice(0 , -1);
+            screenArea.screen.value = clearValue;
+        }
+
+    </script>
+</body>
+</html>
