@@ -17,7 +17,6 @@ function pinScreenNumberCheck(){
             document.getElementById("submit").style.backgroundColor = "gray";
         }
     }
-    // document.getElementById("screen").value = " ";
 }
 // Pin and Screen matched or not function
 function matchedOrNot(isMatched){
